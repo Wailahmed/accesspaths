@@ -1,0 +1,44 @@
+{
+  "name": "Deployment permission chain",
+  "description": "A fictional example with one route from a compromised account to sensitive data.",
+  "source": "intern_account",
+  "target": "sensitive_data",
+  "nodes": [
+    {
+      "id": "intern_account",
+      "type": "account"
+    },
+    {
+      "id": "deployment_script",
+      "type": "resource"
+    },
+    {
+      "id": "service_account",
+      "type": "account"
+    },
+    {
+      "id": "sensitive_data",
+      "type": "resource"
+    }
+  ],
+  "edges": [
+    {
+      "from": "intern_account",
+      "to": "deployment_script",
+      "relationship": "can_modify",
+      "removal_cost": 1
+    },
+    {
+      "from": "deployment_script",
+      "to": "service_account",
+      "relationship": "executes_as",
+      "removal_cost": 3
+    },
+    {
+      "from": "service_account",
+      "to": "sensitive_data",
+      "relationship": "can_read",
+      "removal_cost": 5
+    }
+  ]
+}
